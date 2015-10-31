@@ -17,10 +17,10 @@
     "type": "git",
     "url": "https://github.com/JAForbes/flagon.git"
   },
-  "licence": "MIT",
   "scripts": {
     "test": "mocha",
-    "prepublish": "babel index.es6.js > index.js"
+    "prepublish": "babel index.es6.js > index.js",
+    "safepublish": "mocha && git push && git push --tags && npm publish"
   },
   "repository": {
     "type": "git",

@@ -104,7 +104,7 @@ Usage: `flagon.contains(A,B)` or `flagon(A).contains(B)`
 
 Equivalent Operation: `(A & B) == B`
 
-Does a bit mask contain every true value of another bit mask.
+Does a bit mask contain every true value of another bit mask?
 
 e.g. 
 ```js
