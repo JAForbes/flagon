@@ -113,7 +113,7 @@ var B = 0b1100
 
 ;(A & B) == B == false
 
-flagon.contains(B,A) == false
+flagon.contains(B,A) == flagon(B).contains(A) == false
 
 ;(A & B) == A == true
 ```
@@ -201,3 +201,23 @@ I don't really like chaining, it doesn't work well with composition.  But I adde
 
 I didn't need it for my use case, [YAGNI](https://en.wikipedia.org/wiki/You_aren't_gonna_need_it).
 PR's welcome though.
+
+#### Chained Equality
+
+In this readme there are often chained equalities e.g.
+
+```
+2 == (1 + 1) == (4 / 2)
+```
+
+In actual javascript this wouldn't actually work.  The expression would evaluation to:
+
+```
+2 == 1 + 1 == 4 / 2
+true == 2
+true
+```
+
+But that is only because 2 evaluates to a truthy value.
+
+I'll change this in future so it is less confusing.
