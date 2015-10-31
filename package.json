@@ -1,0 +1,17 @@
+{
+  "name": "flagon",
+  "description": "A tiny bitwise manipulation module built for mortals",
+  "main": "index.js",
+  "version": "0.0.0",
+  "keywords": [
+    "bit", "bitshift", "bit manipulation", 
+    "mask", "bit mask", "flags", "flag",
+    "enum"
+  ],
+  "repo": { 
+    "type": "git", 
+    "url": "https://github.com/JAForbes/flagon.git"
+  },
+  "engines": { "engines" : { "node" : ">=4.0.0" } },
+  "licence": "MIT"
+}
