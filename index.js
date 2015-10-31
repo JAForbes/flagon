@@ -1,15 +1,15 @@
 "use strict";
 
-var flag = function flag(A) {
+var flagon = function flagon(A) {
   return {
     contains: function contains(B) {
-      return flag.contains(A, B);
+      return flagon.contains(A, B);
     },
     merge: function merge(B) {
-      return flag(flag.merge(A, B));
+      return flagon(flagon.merge(A, B));
     },
     toggle: function toggle(B) {
-      return flag(flag.toggle(A, B));
+      return flagon(flagon.toggle(A, B));
     },
     value: function value() {
       return A;
@@ -19,17 +19,19 @@ var flag = function flag(A) {
     }
   };
 };
-flag.contains = function (A, B) {
+flagon.contains = function (A, B) {
   return (A & B) == B;
 };
-flag.merge = function (A, B) {
+flagon.merge = function (A, B) {
   return A | B;
 };
-flag.toggle = function (A, B) {
+flagon.toggle = function (A, B) {
   return A ^ B;
 };
 
 if (typeof module !== "undefined") {
-  module.exports = flag;
+  module.exports = flagon;
+} else {
+  window.flagon = flagon;
 }
 
