@@ -11,19 +11,29 @@ A tiny utility to make using bitwise operations readable by mere mortals.  Drink
 Use either a chaining API `flag(A).method(B).method(B).value()` or access the raw functions via `flag.method(A,B)`
 
 ```js
-var flagon = require('flagon')
-
-var A = 0b1000
-var B = 0b1001
-var C = 0b0110
-
-//Chaining API
-flagon(A).merge(B).value() == 0b1001
+var permission = {
+  READ:     0b0001,
+  CREATE:   0b0010,
+  MODIFY:   0b0100,
+  DELETE:   0b1000
+}
 
 //Raw API
-flagon.toggle(A,B) == 0b0001
+var GUEST = permission.READ
+var USER = flagon.merge(permission.READ, permission.MODIFY)
+var ADMIN = flagon.merge(USER, permission.CREATE)
+var SUPERUSER = flagon.merge(ADMIN, permission.DELETE)
+ 
+var SUPER_GUEST = flagon.toggle(GUEST, permission.DELETE)
 
-flagon.contains(B,C) == false
+//Chaining API
+var DELETE_BUT_NOT_READ = flagon(USER)
+				.merge(permission.DELETE)
+				.toggle(permission.READ)
+		    
+DELETE_BUT_NOT_READ.contains(permission.READ) == false
+DELETE_BUT_NOT_READ.contains(permission.DELETE) == true
+
 ```
 
 #### Why make something so concise so verbose?  
@@ -56,7 +66,7 @@ var SUPERUSER = flagon.merge(ADMIN, permission.DELETE)
 And you may want to check if a `GUEST` can `MODIFY`.
 
 ```js
-flagon(GUEST).contains(permission.CREATE).value() == false
+flagon(GUEST).contains(permission.CREATE) == false
 ```
 
 And you may want to temporarily grant access to `MODIFY` to a `GUEST` user.
@@ -76,6 +86,7 @@ The flags themselves are uninteresting, but they facilitate expansion of your pe
 ##### merge (Binary OR)
 
 Usage: `flagon.merge(A,B)` or `flagon(A).merge(B).value()`
+
 Equivalent Operation: `A | B`
 
 Merges all true flags that share a column in two binary sequences.
@@ -89,7 +100,8 @@ flagon.merge(0b1000).merge(0b0100).merge(0b0010).value() == 0b1110
 
 ##### contains
 
-Usage: `flagon.contains(A,B)` or `flagon(A).contains(B).value()`
+Usage: `flagon.contains(A,B)` or `flagon(A).contains(B)`
+
 Equivalent Operation: `(A & B) == B`
 
 Does a bit mask contain every true value of another bit mask.
@@ -106,9 +118,12 @@ flagon.contains(B,A) == false
 ;(A & B) == A == true
 ```
 
+Note `contains` will automatically unwrap a wrapped value.
+
 ##### toggle
 
 Usage: `flagon.toggle(A,B)` or `flagon(A).toggle(B).value()`
+
 Equivalent Operation: `(A ^ B)`
 
 Flips every bit of the object that has a different true value to the subject.
