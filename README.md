@@ -23,20 +23,20 @@ var GUEST = permission.READ
 var USER = flagon.merge(permission.READ, permission.MODIFY)
 var ADMIN = flagon.merge(USER, permission.CREATE)
 var SUPERUSER = flagon.merge(ADMIN, permission.DELETE)
- 
+
 var SUPER_GUEST = flagon.toggle(GUEST, permission.DELETE)
 
 //Chaining API
 var DELETE_BUT_NOT_READ = flagon(USER)
 				.merge(permission.DELETE)
 				.toggle(permission.READ)
-		    
+
 DELETE_BUT_NOT_READ.contains(permission.READ) == false
 DELETE_BUT_NOT_READ.contains(permission.DELETE) == true
 
 ```
 
-#### Why make something so concise so verbose?  
+#### Why make something so concise so verbose?
 
 Bitwise operations are very powerful and concise.  But exactly because they are so powerful, they are often used in security critical situations.  By making the operations more readable it is less likely the developer will unintentionally permit access to restricted data or operations.
 
@@ -91,7 +91,7 @@ Equivalent Operation: `A | B`
 
 Merges all true flags that share a column in two binary sequences.
 
-e.g. 
+e.g.
 ```js
 (0b1000 | 0b0100 | 0b0010) == 0b1110
 
@@ -102,11 +102,11 @@ flagon.merge(0b1000).merge(0b0100).merge(0b0010).value() == 0b1110
 
 Usage: `flagon.contains(A,B)` or `flagon(A).contains(B)`
 
-Equivalent Operation: `(A & B) == B`
+Equivalent Operation: `B == 0 || ((A & B) == B)`
 
 Does a bit mask contain every true value of another bit mask?
 
-e.g. 
+e.g.
 ```js
 var A = 0b1000
 var B = 0b1100
@@ -128,7 +128,7 @@ Equivalent Operation: `(A ^ B)`
 
 Flips every bit of the object that has a different true value to the subject.
 
-e.g. 
+e.g.
 ```js
 var A = 0b1000
 var B = 0b1100
@@ -193,7 +193,7 @@ flagon(0b111).toggle(0b010).value() == 0b101
 
 ----
 
-#### Why chaining?  
+#### Why chaining?
 
 I don't really like chaining, it doesn't work well with composition.  But I added chaining when writing the library to help me get my head around the operations.  One benefit of chaining, is it becomes quite clear which argument is the object, and which is the subject.  In your actual application code I don't see it being that useful, but I also don't see any need for removing it when the whole script is ~20 lines of code.
 
