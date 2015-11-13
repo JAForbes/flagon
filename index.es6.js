@@ -5,7 +5,7 @@ var flagon = (A) => ({
   value: () => A,
   toString: () => A.toString(2)
 })
-flagon.contains = (A,B) => (A & B) == B
+flagon.contains = (A,B) => B == 0 || ((A & B) == B)
 flagon.merge = (A,B) => A | B
 flagon.toggle = (A,B) => A ^ B
 
