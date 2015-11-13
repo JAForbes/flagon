@@ -20,7 +20,7 @@ var flagon = function flagon(A) {
   };
 };
 flagon.contains = function (A, B) {
-  return (A & B) == B;
+  return B == 0 || (A & B) == B;
 };
 flagon.merge = function (A, B) {
   return A | B;
